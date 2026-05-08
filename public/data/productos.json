@@ -1,0 +1,45 @@
+[
+    {
+        "id": 1,
+        "nombre": "Abbey Road",
+        "precio": 136000,
+        "imagen": "/img/Abbey-Road.jpeg"
+    },
+
+     {
+        "id": 2,
+        "nombre": "Back in Black",
+        "precio": 124000,
+        "imagen": "/img/acdc.png"
+    },
+
+     {
+        "id": 3,
+        "nombre": "I love rock and roll",
+        "precio": 128000,
+        "imagen": "/img/joanjett.jpg"
+    },
+
+     {
+        "id": 4,
+        "nombre": "Dookie",
+        "precio": 132000,
+        "imagen": "/img/dookie.jpg"
+    },
+
+     {
+        "id": 5,
+        "nombre": "Surfin' USA",
+        "precio": 123000,
+        "imagen": "/img/beachboys.jpg"
+    },
+
+     {
+        "id": 6,
+        "nombre": "Led Zeppelin IV",
+        "precio": 148000,
+        "imagen": "/img/Zeppelin_IV.jpg"
+    }
+
+
+]
