@@ -47,6 +47,12 @@ const NavBar = () => {
 
                 <CartWidget />
 
+                <Link 
+                to="/nuevo-producto"
+                onClick={() => setMenuOpen(false)}>
+                    Nuevo Producto
+                </Link>
+
             </div>
 
         </nav>
