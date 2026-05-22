@@ -1,5 +1,9 @@
 import { useContext, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import {
+    useParams,
+    useNavigate
+} from "react-router-dom";
+
 import { CartContext } from "../context/CartContext";
 
 const ProductoDetalle = () => {
@@ -8,11 +12,16 @@ const ProductoDetalle = () => {
 
     const { id } = useParams();
 
+    const navigate = useNavigate();
+
     const [producto, setProducto] = useState(null);
 
     useEffect(() => {
+
         fetch("/data/productos.json")
+
             .then(res => res.json())
+
             .then(data => {
 
                 const productoEncontrado = data.find(
@@ -25,36 +34,59 @@ const ProductoDetalle = () => {
     }, [id]);
 
     if (!producto) {
+
         return <h2>Cargando producto...</h2>;
     }
 
     return(
 
-        <section className="detalle-container">
+        <>
 
-            <div className="detalle-img">
-                <img src={producto.imagen} alt={producto.nombre} />
-            </div>
+            {/* BOTON VOLVER */}
+            <button
+                className="btn-volver"
+                onClick={() => navigate(-1)}
+            >
+                ← Volver
+            </button>
 
-            <div className="detalle-info">
+            {/* DETALLE */}
+            <section className="detalle-container">
 
-                <h2>{producto.nombre}</h2>
+                <div className="detalle-img">
 
-                <p className="detalle-precio">
-                    ${producto.precio}
-                </p>
+                    <img
+                        src={producto.imagen}
+                        alt={producto.nombre}
+                    />
 
-                <p className="detalle-desc">
-                    Edición especial en vinilo de colección con sonido remasterizado.
-                </p>
+                </div>
 
-                <button onClick={()=> addToCart(producto)}>
-                    Agregar al carrito
-                </button>
+                <div className="detalle-info">
 
-            </div>
+                    <h2>{producto.nombre}</h2>
 
-        </section>
+                    <p className="detalle-precio">
+                        ${producto.precio}
+                    </p>
+
+                    <p className="detalle-desc">
+                        Edición especial en vinilo
+                        de colección con sonido
+                        remasterizado.
+                    </p>
+
+                    <button
+                        onClick={() => addToCart(producto)}
+                    >
+                        Agregar al carrito
+                    </button>
+
+                </div>
+
+            </section>
+
+        </>
     );
 };
 

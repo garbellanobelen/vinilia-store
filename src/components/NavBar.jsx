@@ -13,12 +13,20 @@ const NavBar = () => {
             {/* LOGO */}
             <h2 className="logo">VINILIA</h2>
 
-            {/* HAMBURGUESA */}
-            <div
-                className="hamburguesa"
-                onClick={() => setMenuOpen(!menuOpen)}
-            >
-                {menuOpen ? "✖" : "☰"}
+            {/* RIGHT SIDE */}
+            <div className="navbar-right">
+
+                {/* CARRITO */}
+                <CartWidget />
+
+                {/* HAMBURGUESA */}
+                <div
+                    className="hamburguesa"
+                    onClick={() => setMenuOpen(!menuOpen)}
+                >
+                    {menuOpen ? "✖" : "☰"}
+                </div>
+
             </div>
 
             {/* LINKS */}
@@ -45,11 +53,10 @@ const NavBar = () => {
                     Carrito
                 </Link>
 
-                <CartWidget />
-
-                <Link 
-                to="/nuevo-producto"
-                onClick={() => setMenuOpen(false)}>
+                <Link
+                    to="/nuevo-producto"
+                    onClick={() => setMenuOpen(false)}
+                >
                     Nuevo Producto
                 </Link>
 

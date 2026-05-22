@@ -59,6 +59,32 @@ header {
   text-align: center;
 }
 
+.btn-volver{
+  margin: 30px 0 0 30px;
+
+  background: var(--verde);
+
+  color: white;
+
+  border: none;
+
+  padding: 12px 20px;
+
+  border-radius: 10px;
+
+  cursor: pointer;
+
+  font-size: 15px;
+
+  transition: 0.3s;
+}
+
+.btn-volver:hover{
+  background: var(--naranja);
+
+  transform: translateX(-4px);
+}
+
 
 
 .navbar{
@@ -77,6 +103,12 @@ header {
   backdrop-filter: blur(10px);
 
   box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.navbar-right{
+  display: flex;
+  align-items: center;
+  gap: 20px;
 }
 
 .logo{
@@ -682,8 +714,27 @@ footer .marca{
 @media (max-width: 768px){
 
   /* navbar */
+
+    .navbar{
+    position: relative;
+  }
+
   .hamburguesa{
     display: block;
+  }
+
+  .navbar-right{
+    display: flex;
+    align-items: center;
+    gap: 15px;
+  }
+
+  .cart-widget{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 24px;
   }
 
   .nav-links{
@@ -692,9 +743,9 @@ footer .marca{
     top: 70px;
     right: 0;
 
-    background: var(--verde);
-
     width: 100%;
+
+    background: var(--verde);
 
     flex-direction: column;
 
@@ -707,8 +758,6 @@ footer .marca{
 
   .nav-links.active{
     display: flex;
-
-    animation: fadeIn 0.4s ease;
   }
 
   /* hero */
