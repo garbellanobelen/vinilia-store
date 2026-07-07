@@ -4,7 +4,7 @@ export const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
 
-    // ESTADO DEL CARRITO + LOCALSTORAGE
+
     const [carrito, setCarrito] = useState(() => {
 
         const carritoGuardado = localStorage.getItem("carrito");
@@ -12,9 +12,36 @@ export const CartProvider = ({ children }) => {
         return carritoGuardado
             ? JSON.parse(carritoGuardado)
             : [];
+
     });
 
-    // GUARDAR EN LOCALSTORAGE
+
+    const [descuento, setDescuento] = useState(0);
+
+    const aplicarCupon = (codigo) => {
+
+        switch (codigo.toUpperCase()) {
+
+            case "VINILIA10":
+                setDescuento(10);
+                return true;
+
+            case "ROCK20":
+                setDescuento(20);
+                return true;
+
+            case "VINILO30":
+                setDescuento(30);
+                return true;
+
+            default:
+                setDescuento(0);
+                return false;
+        }
+
+    };
+
+
     useEffect(() => {
 
         localStorage.setItem(
@@ -24,114 +51,176 @@ export const CartProvider = ({ children }) => {
 
     }, [carrito]);
 
-    // AGREGAR PRODUCTOS
+
     const addToCart = (producto) => {
 
         const existe = carrito.find(
             prod => prod.id === producto.id
         );
 
-        
         if (existe) {
 
-            const carritoActualizado = carrito.map(prod =>
-                prod.id === producto.id
-                    ? {
-                        ...prod,
-                        cantidad: prod.cantidad + 1
-                    }
-                    : prod
-            );
+            setCarrito(
 
-            setCarrito(carritoActualizado);
+                carrito.map(prod =>
+
+                    prod.id === producto.id
+                        ? {
+                            ...prod,
+                            cantidad: prod.cantidad + 1
+                        }
+                        : prod
+
+                )
+
+            );
 
         } else {
 
-            
             setCarrito([
+
                 ...carrito,
+
                 {
                     ...producto,
                     cantidad: 1
                 }
+
             ]);
+
         }
+
     };
 
-    // ELIMINAR PRODUCTO
+
     const removeFromCart = (id) => {
 
-        const carritoFiltrado = carrito.filter(
-            prod => prod.id !== id
+        setCarrito(
+
+            carrito.filter(
+
+                prod => prod.id !== id
+
+            )
+
         );
 
-        setCarrito(carritoFiltrado);
     };
 
-    // AUMENTAR CANTIDAD
+
     const incrementarCantidad = (id) => {
 
-        const carritoActualizado = carrito.map(prod =>
-            prod.id === id
-                ? {
-                    ...prod,
-                    cantidad: prod.cantidad + 1
-                }
-                : prod
+        setCarrito(
+
+            carrito.map(prod =>
+
+                prod.id === id
+
+                    ? {
+                        ...prod,
+                        cantidad: prod.cantidad + 1
+                    }
+
+                    : prod
+
+            )
+
         );
 
-        setCarrito(carritoActualizado);
     };
 
-    // DISMINUIR CANTIDAD
+
     const disminuirCantidad = (id) => {
 
-        const carritoActualizado = carrito.map(prod =>
-            prod.id === id && prod.cantidad > 1
-                ? {
-                    ...prod,
-                    cantidad: prod.cantidad - 1
-                }
-                : prod
+        setCarrito(
+
+            carrito.map(prod =>
+
+                prod.id === id && prod.cantidad > 1
+
+                    ? {
+                        ...prod,
+                        cantidad: prod.cantidad - 1
+                    }
+
+                    : prod
+
+            )
+
         );
 
-        setCarrito(carritoActualizado);
     };
 
-    // VACIAR CARRITO
+
     const clearCart = () => {
+
         setCarrito([]);
+        setDescuento(0);
+
     };
 
-    // TOTAL DEL CARRITO
     const totalCarrito = carrito.reduce(
+
         (acc, prod) =>
+
             acc + (prod.precio * prod.cantidad),
+
         0
+
     );
 
-     const totalItems = carrito.reduce(
-        (acc, prod) => acc + prod.cantidad,
+    const totalItems = carrito.reduce(
+
+        (acc, prod) =>
+
+            acc + prod.cantidad,
+
         0
+
     );
+
+    const totalConDescuento =
+
+        totalCarrito -
+
+        (totalCarrito * descuento / 100);
 
     return (
 
         <CartContext.Provider
+
             value={{
+
                 carrito,
+
                 addToCart,
+
                 removeFromCart,
+
                 incrementarCantidad,
+
                 disminuirCantidad,
+
                 clearCart,
+
                 totalCarrito,
-                totalItems
+
+                totalItems,
+
+                descuento,
+
+                totalConDescuento,
+
+                aplicarCupon
+
             }}
+
         >
 
             {children}
 
         </CartContext.Provider>
+
     );
+
 };

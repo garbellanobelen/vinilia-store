@@ -1,16 +1,75 @@
-# React + Vite
+#  Vinilia Store
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Vinilia Store es una aplicación web desarrollada en React que permite explorar un catálogo de vinilos, gestionar un carrito de compras y administrar productos mediante Firebase.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+##  Tecnologías utilizadas
 
-## React Compiler
+- React
+- React Router DOM
+- Context API
+- Firebase Authentication
+- Firebase Firestore
+- CSS3
+- Vite
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
 
-## Expanding the ESLint configuration
+##  Funcionalidades
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### Usuarios
+
+- Registro de usuarios
+- Inicio de sesión
+- Cierre de sesión
+- Rutas protegidas
+
+---
+
+### Productos
+
+- Listado de productos
+- Detalle de producto
+- Agregar productos
+- Editar productos
+- Eliminar productos
+- Confirmación antes de eliminar
+
+---
+
+### Carrito
+
+- Agregar productos
+- Eliminar productos
+- Modificar cantidades
+- Vaciar carrito
+- Cupón de descuento
+- Total automático
+
+---
+
+### Firebase
+
+- Authentication
+- Firestore Database
+
+---
+
+##  Responsive
+
+La aplicación se adapta a:
+
+- Desktop
+- Tablet
+- Mobile
+
+---
+
+
+
+## 👩‍💻 Autora
+
+Belén Garbellano
+
+Proyecto realizado como entrega final utilizando React + Firebase.

@@ -1,12 +1,15 @@
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import CartWidget from "./CartWidget";
+import { AuthContext } from "../context/AuthContext";
 
 const NavBar = () => {
 
     const [menuOpen, setMenuOpen] = useState(false);
 
-    return(
+    const { user, logout } = useContext(AuthContext);
+
+    return (
 
         <nav className="navbar">
 
@@ -16,10 +19,8 @@ const NavBar = () => {
             {/* RIGHT SIDE */}
             <div className="navbar-right">
 
-                {/* CARRITO */}
                 <CartWidget />
 
-                {/* HAMBURGUESA */}
                 <div
                     className="hamburguesa"
                     onClick={() => setMenuOpen(!menuOpen)}
@@ -53,16 +54,60 @@ const NavBar = () => {
                     Carrito
                 </Link>
 
-                <Link
-                    to="/nuevo-producto"
-                    onClick={() => setMenuOpen(false)}
-                >
-                    Nuevo Producto
-                </Link>
+                {user && (
+                    <>
+                        <Link
+                            to="/productosBD"
+                            onClick={() => setMenuOpen(false)}
+                        >
+                            Productos BD
+                        </Link>
+
+                        <Link
+                            to="/nuevo-producto"
+                            onClick={() => setMenuOpen(false)}
+                        >
+                            Nuevo Producto
+                        </Link>
+
+                        <span className="usuario">
+                            Hola, {user.email}
+                        </span>
+
+                        <button
+                            className="btn-logout"
+                            onClick={async () => {
+                                await logout();
+                                setMenuOpen(false);
+                            }}
+                        >
+                            Cerrar sesión
+                        </button>
+                    </>
+                )}
+
+                {!user && (
+                    <>
+                        <Link
+                            to="/login"
+                            onClick={() => setMenuOpen(false)}
+                        >
+                            Iniciar sesión
+                        </Link>
+
+                        <Link
+                            to="/registro"
+                            onClick={() => setMenuOpen(false)}
+                        >
+                            Registrarse
+                        </Link>
+                    </>
+                )}
 
             </div>
 
         </nav>
+
     );
 };
 
