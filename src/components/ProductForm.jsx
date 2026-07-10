@@ -3,13 +3,7 @@ import { useEffect, useState } from "react";
 const ProductForm = ({
     handleFormSubmit,
     loading,
-    initialValues = {
-        nombre: "",
-        precio: "",
-        imagen: "",
-        categoria: "",
-        stock: ""
-    },
+    initialValues,
     buttonText = "Agregar producto",
     resetForm = false,
     onResetComplete = () => {}
@@ -23,30 +17,33 @@ const ProductForm = ({
 
     useEffect(() => {
 
+    if (initialValues) {
+
         setNombre(initialValues.nombre || "");
         setPrecio(initialValues.precio || "");
         setImagen(initialValues.imagen || "");
         setCategoria(initialValues.categoria || "");
         setStock(initialValues.stock || "");
 
-    }, [initialValues]);
+    }
+
+}, [initialValues]);
 
     useEffect(() => {
 
-        if (resetForm) {
+    if (resetForm) {
 
-            setNombre("");
-            setPrecio("");
-            setImagen("");
-            setCategoria("");
-            setStock("");
+        setNombre("");
+        setPrecio("");
+        setImagen("");
+        setCategoria("");
+        setStock("");
 
-            onResetComplete();
+        onResetComplete?.();
 
-        }
+    }
 
-    }, [resetForm, onResetComplete]);
-
+}, [resetForm]);
     const onSubmit = (e) => {
 
         e.preventDefault();
