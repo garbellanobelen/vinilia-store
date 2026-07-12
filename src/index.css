@@ -1344,3 +1344,145 @@ footer .marca{
   color: #721c24;
   border: 1px solid #f5c6cb;
 }
+
+.admin-header{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 40px;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.btn-nuevo-producto{
+  background: #E05A2B;
+  color: white;
+  border: none;
+  padding: 12px 22px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: .3s;
+}
+
+.btn-nuevo-producto:hover{
+  transform: translateY(-3px);
+  opacity: .9;
+}
+
+.admin-buttons{
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.estado-stock{
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.cupon-container{
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.cupon-container select{
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+.carrito-total{
+  margin-top: 30px;
+  background: #f7f7f7;
+  padding: 20px;
+  border-radius: 12px;
+}
+
+.carrito-total p{
+  margin: 8px 0;
+}
+
+
+.carrito-total h3{
+  margin-top: 15px;
+  font-size: 1.5rem;
+}
+
+.btn-vaciar{
+  margin-top: 20px;
+  background: #c0392b;
+  color: white;
+  border: none;
+  padding: 12px 22px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: .3s;
+}
+
+.btn-vaciar:hover{
+  background: #962d22;
+}
+
+.equipo{
+  padding: 80px 10%;
+  background: #f8f7f4;
+  text-align: center;
+}
+
+.equipo h2{
+  font-size: 2.5rem;
+  color: var(--verde);
+  margin-bottom: 10px;
+}
+
+.equipo-subtitulo{
+  color: #666;
+  margin-bottom: 50px;
+}
+
+.equipo-grid{
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 35px;
+}
+
+.equipo-card{
+  width: 320px;
+  background: white;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 10px 25px rgba(0,0,0,.08);
+  transition: .35s;
+}
+
+.equipo-card:hover{
+  transform: translateY(-8px);
+}
+
+.equipo-card img{
+  width: 100%;
+  height: 320px;
+  object-fit: cover;
+}
+
+.equipo-card h3{
+  margin-top: 20px;
+  color: var(--verde);
+}
+
+.equipo-card span{
+  display: block;
+  color: var(--naranja);
+  font-weight: bold;
+  margin-top: 10px 0;
+}
+
+.equipo-card p{
+  padding: 0 25px 30px;
+  color: #555;
+  line-height: 1.6;
+}

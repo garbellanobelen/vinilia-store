@@ -35,9 +35,11 @@ const ProductosBD = () => {
                 const resp = await getDocs(productosRef);
 
                 const productosFirebase = resp.docs.map((doc) => ({
-                    id: doc.id,
-                    ...doc.data()
-                }));
+
+                ...doc.data(),
+                id: doc.id
+
+            }));
 
                 setProductos(productosFirebase);
 
@@ -76,7 +78,6 @@ const ProductosBD = () => {
             );
 
             setModalOpen(false);
-
             setProductoSeleccionado(null);
 
         } catch (error) {
@@ -91,7 +92,7 @@ const ProductosBD = () => {
 
     if (loading) {
 
-    return <Spinner texto="Cargando productos..." />;
+        return <Spinner texto="Cargando productos..." />;
 
     }
 
@@ -105,7 +106,26 @@ const ProductosBD = () => {
 
         <section className="productosBD-container">
 
-            <h2>Productos de Firebase</h2>
+            <div className="admin-header">
+
+                <div>
+
+                    <h2>Panel de Administración</h2>
+
+                    <p>
+                        Gestioná el catálogo de Vinilia Store.
+                    </p>
+
+                </div>
+
+                <button
+                    className="btn-nuevo-producto"
+                    onClick={() => navigate("/nuevo-producto")}
+                >
+                    + Nuevo Vinilo
+                </button>
+
+            </div>
 
             <div className="productos-grid">
 
@@ -123,33 +143,53 @@ const ProductosBD = () => {
 
                         <h3>{prod.nombre}</h3>
 
-                        <p><strong>Categoría:</strong> {prod.categoria}</p>
+                        <p>
+                            <strong>Categoría:</strong> {prod.categoria}
+                        </p>
 
-                        <p><strong>Precio:</strong> ${prod.precio}</p>
+                        <p>
+                            <strong>Precio:</strong> ${prod.precio}
+                        </p>
 
-                        <p><strong>Stock:</strong> {prod.stock}</p>
+                        <p>
+                            <strong>Stock:</strong> {prod.stock}
+                        </p>
 
-                        <button
-                            className="btn-editar-producto"
-                            onClick={() =>
-                                navigate(`/editar-producto/${prod.id}`)
-                            }
-                        >
-                            Editar
-                        </button>
+                        <p className="estado-stock">
 
-                        <button
-                            className="btn-eliminar-producto"
-                            onClick={() => {
+                            {prod.stock > 5 && "🟢 En stock"}
 
-                                setProductoSeleccionado(prod);
+                            {prod.stock > 0 && prod.stock <= 5 && "🟠 Últimas unidades"}
 
-                                setModalOpen(true);
+                            {prod.stock === 0 && "🔴 Sin stock"}
 
-                            }}
-                        >
-                            Eliminar
-                        </button>
+                        </p>
+
+                        <div className="admin-buttons">
+
+                            <button
+                                className="btn-editar-producto"
+                                onClick={() =>
+                                    navigate(`/editar-producto/${prod.id}`)
+                                }
+                            >
+                                ✏️ Editar
+                            </button>
+
+                            <button
+                                className="btn-eliminar-producto"
+                                onClick={() => {
+
+                                    setProductoSeleccionado(prod);
+
+                                    setModalOpen(true);
+
+                                }}
+                            >
+                                🗑 Eliminar
+                            </button>
+
+                        </div>
 
                     </div>
 

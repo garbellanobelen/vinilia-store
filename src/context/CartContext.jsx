@@ -15,32 +15,15 @@ export const CartProvider = ({ children }) => {
 
     });
 
+    const [cupon, setCupon] = useState("");
 
-    const [descuento, setDescuento] = useState(0);
+    const descuentos = {
 
-    const aplicarCupon = (codigo) => {
-
-        switch (codigo.toUpperCase()) {
-
-            case "VINILIA10":
-                setDescuento(10);
-                return true;
-
-            case "ROCK20":
-                setDescuento(20);
-                return true;
-
-            case "VINILO30":
-                setDescuento(30);
-                return true;
-
-            default:
-                setDescuento(0);
-                return false;
-        }
+        VINILIA10: 0.10,
+        VINILIA20: 0.20,
+        VINILIA30: 0.30
 
     };
-
 
     useEffect(() => {
 
@@ -51,7 +34,6 @@ export const CartProvider = ({ children }) => {
 
     }, [carrito]);
 
-
     const addToCart = (producto) => {
 
         const existe = carrito.find(
@@ -60,32 +42,25 @@ export const CartProvider = ({ children }) => {
 
         if (existe) {
 
-            setCarrito(
-
-                carrito.map(prod =>
-
-                    prod.id === producto.id
-                        ? {
-                            ...prod,
-                            cantidad: prod.cantidad + 1
-                        }
-                        : prod
-
-                )
-
+            const carritoActualizado = carrito.map(prod =>
+                prod.id === producto.id
+                    ? {
+                        ...prod,
+                        cantidad: prod.cantidad + 1
+                    }
+                    : prod
             );
+
+            setCarrito(carritoActualizado);
 
         } else {
 
             setCarrito([
-
                 ...carrito,
-
                 {
                     ...producto,
                     cantidad: 1
                 }
-
             ]);
 
         }
@@ -96,13 +71,7 @@ export const CartProvider = ({ children }) => {
     const removeFromCart = (id) => {
 
         setCarrito(
-
-            carrito.filter(
-
-                prod => prod.id !== id
-
-            )
-
+            carrito.filter(prod => prod.id !== id)
         );
 
     };
@@ -129,7 +98,6 @@ export const CartProvider = ({ children }) => {
 
     };
 
-
     const disminuirCantidad = (id) => {
 
         setCarrito(
@@ -155,9 +123,11 @@ export const CartProvider = ({ children }) => {
     const clearCart = () => {
 
         setCarrito([]);
-        setDescuento(0);
+
+        setCupon("");
 
     };
+
 
     const totalCarrito = carrito.reduce(
 
@@ -179,11 +149,12 @@ export const CartProvider = ({ children }) => {
 
     );
 
-    const totalConDescuento =
+    const porcentajeDescuento = descuentos[cupon] || 0;
 
-        totalCarrito -
+    const montoDescuento = totalCarrito * porcentajeDescuento;
 
-        (totalCarrito * descuento / 100);
+    const totalConDescuento = totalCarrito - montoDescuento;
+
 
     return (
 
@@ -207,11 +178,13 @@ export const CartProvider = ({ children }) => {
 
                 totalItems,
 
-                descuento,
+                cupon,
 
-                totalConDescuento,
+                setCupon,
 
-                aplicarCupon
+                montoDescuento,
+
+                totalConDescuento
 
             }}
 

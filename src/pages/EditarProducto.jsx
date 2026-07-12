@@ -32,9 +32,9 @@ const EditarProducto = () => {
                 if (resp.exists()) {
 
                     setProducto({
-                        id: resp.id,
-                        ...resp.data()
-                    });
+                    ...resp.data(),
+                    id: resp.id
+                });
 
                 }
 

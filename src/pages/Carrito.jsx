@@ -1,37 +1,24 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { CartContext } from "../context/CartContext";
 
 const Carrito = () => {
 
     const {
+
         carrito,
         removeFromCart,
         incrementarCantidad,
         disminuirCantidad,
         clearCart,
+
         totalCarrito,
-        totalConDescuento,
-        descuento,
-        aplicarCupon
+
+        cupon,
+        setCupon,
+        montoDescuento,
+        totalConDescuento
+
     } = useContext(CartContext);
-
-    const [codigo, setCodigo] = useState("");
-
-    const manejarCupon = () => {
-
-        const valido = aplicarCupon(codigo);
-
-        if (valido) {
-
-            alert("Cupón aplicado correctamente.");
-
-        } else {
-
-            alert("El cupón ingresado no es válido.");
-
-        }
-
-    };
 
     return (
 
@@ -70,7 +57,7 @@ const Carrito = () => {
                                     <button
                                         onClick={() => disminuirCantidad(prod.id)}
                                     >
-                                        -
+                                        −
                                     </button>
 
                                     <span>{prod.cantidad}</span>
@@ -84,8 +71,10 @@ const Carrito = () => {
                                 </div>
 
                                 <p className="subtotal">
-                                    Subtotal: $
-                                    {prod.precio * prod.cantidad}
+
+                                    Subtotal:
+                                    ${prod.precio * prod.cantidad}
+
                                 </p>
 
                             </div>
@@ -101,40 +90,63 @@ const Carrito = () => {
 
                     ))}
 
+                    {/* CUPONES */}
+
                     <div className="cupon-container">
 
-                        <h3>Cupón de descuento</h3>
+                        <h3>🎟 Cupón de descuento</h3>
 
-                        <input
-                            type="text"
-                            placeholder="Ej: VINILIA10"
-                            value={codigo}
-                            onChange={(e) => setCodigo(e.target.value)}
-                        />
-
-                        <button
-                            className="btn-cupon"
-                            onClick={manejarCupon}
+                        <select
+                            value={cupon}
+                            onChange={(e) => setCupon(e.target.value)}
                         >
-                            Aplicar cupón
-                        </button>
+
+                            <option value="">
+                                Seleccionar cupón
+                            </option>
+
+                            <option value="VINILIA10">
+                                VINILIA10 - 10%
+                            </option>
+
+                            <option value="VINILIA20">
+                                VINILIA20 - 20%
+                            </option>
+
+                            <option value="VINILIA30">
+                                VINILIA30 - 30%
+                            </option>
+
+                        </select>
 
                     </div>
+
+                    {/* TOTAL */}
 
                     <div className="carrito-total">
 
                         <p>
-                            <strong>Subtotal:</strong> $
-                            {totalCarrito}
+
+                            <strong>Subtotal:</strong>
+
+                            ${totalCarrito.toFixed(2)}
+
                         </p>
 
                         <p>
-                            <strong>Descuento:</strong> {descuento}%
+
+                            <strong>Descuento:</strong>
+
+                            -${montoDescuento.toFixed(2)}
+
                         </p>
 
                         <h3>
-                            Total Final: $
-                            {totalConDescuento}
+
+                            Total:
+
+                            ${totalConDescuento.toFixed(2)}
+
                         </h3>
 
                         <button

@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 const Item = ({ producto }) => {
 
-    return(
+    return (
 
         <div className="card">
 
@@ -24,7 +24,9 @@ const Item = ({ producto }) => {
             </Link>
 
         </div>
+
     );
+
 };
 
 export default Item;

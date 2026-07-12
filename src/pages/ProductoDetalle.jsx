@@ -6,6 +6,15 @@ import {
 
 import { CartContext } from "../context/CartContext";
 
+import {
+    doc,
+    getDoc
+} from "firebase/firestore";
+
+import { db } from "../firebase/config";
+
+import Spinner from "../components/Spinner";
+
 const ProductoDetalle = () => {
 
     const { addToCart } = useContext(CartContext);
@@ -15,34 +24,66 @@ const ProductoDetalle = () => {
     const navigate = useNavigate();
 
     const [producto, setProducto] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState("");
 
     useEffect(() => {
 
-        fetch("/data/productos.json")
+        const obtenerProducto = async () => {
 
-            .then(res => res.json())
+            try {
 
-            .then(data => {
+                const productoRef = doc(db, "productos", id);
 
-                const productoEncontrado = data.find(
-                    prod => prod.id === Number(id)
-                );
+                const resp = await getDoc(productoRef);
 
-                setProducto(productoEncontrado);
-            });
+                if (resp.exists()) {
+
+                    setProducto({
+                        id: resp.id,
+                        ...resp.data()
+                    });
+
+                } else {
+
+                    setError("Producto no encontrado.");
+
+                }
+
+            } catch (err) {
+
+                console.log(err);
+
+                setError("Ocurrió un error al cargar el producto.");
+
+            } finally {
+
+                setLoading(false);
+
+            }
+
+        };
+
+        obtenerProducto();
 
     }, [id]);
 
-    if (!producto) {
+    if (loading) {
 
-        return <h2>Cargando producto...</h2>;
+        return <Spinner texto="Cargando producto..." />;
+
     }
 
-    return(
+    if (error) {
+
+        return <h2>{error}</h2>;
+
+    }
+
+    return (
 
         <>
 
-            {/* BOTON VOLVER */}
             <button
                 className="btn-volver"
                 onClick={() => navigate(-1)}
@@ -50,7 +91,6 @@ const ProductoDetalle = () => {
                 ← Volver
             </button>
 
-            {/* DETALLE */}
             <section className="detalle-container">
 
                 <div className="detalle-img">
@@ -67,13 +107,27 @@ const ProductoDetalle = () => {
                     <h2>{producto.nombre}</h2>
 
                     <p className="detalle-precio">
+
                         ${producto.precio}
+
+                    </p>
+
+                    <p>
+
+                        <strong>Categoría:</strong> {producto.categoria}
+
+                    </p>
+
+                    <p>
+
+                        <strong>Stock:</strong> {producto.stock}
+
                     </p>
 
                     <p className="detalle-desc">
-                        Edición especial en vinilo
-                        de colección con sonido
-                        remasterizado.
+
+                        Edición especial en vinilo de colección con sonido remasterizado.
+
                     </p>
 
                     <button
@@ -87,7 +141,9 @@ const ProductoDetalle = () => {
             </section>
 
         </>
+
     );
+
 };
 
 export default ProductoDetalle;
